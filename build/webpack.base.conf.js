@@ -39,6 +39,9 @@ const webpackConfig = {
       '@': resolve('src')
     }
   },
+  devServer: {
+    disableHostCheck: true
+  },
   module: {
     rules: [
       ...(config.dev.useEslint ? [createLintingRule()] : []),

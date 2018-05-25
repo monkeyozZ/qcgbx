@@ -1,7 +1,11 @@
 <template>
   <div>
     <router-view></router-view>
-    <v-tabbar></v-tabbar>
+    <v-tabbar v-if="
+    $route.path !== '/safe/car'&&
+    $route.path !== '/safe/buy'&&
+    $route.path !== '/safe/compensate'
+    "></v-tabbar>
   </div>
 </template>
 
