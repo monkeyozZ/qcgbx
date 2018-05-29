@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="banner">
-      <img src="@/assets/carsafe_buy.png">
+      <img src="../../../static/images/carsafe_buy.png">
     </div>
     <div class="form_box">
       <h1 class="title">填写您的车辆信息</h1>
@@ -170,7 +170,7 @@ export default {
     border: none;
     border-radius: 50px;
     outline: none;
-    background: linear-gradient(left, rgb(240,152,25), rgb(253, 95, 81))
+    background: -webkit-linear-gradient(left, rgb(240,152,25), rgb(253, 95, 81))
   }
 }
 </style>

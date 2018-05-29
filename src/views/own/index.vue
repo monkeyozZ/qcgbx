@@ -4,7 +4,7 @@
     <div class="avt_name">
       <div  class="avt">
         <router-link to="/data">
-           <img src="@/assets/avt.png" alt="头像">
+           <img src="../../../static/images/avt.png" alt="头像">
         </router-link>
       </div>
       <p class="name">汪雷书记</p>
@@ -12,7 +12,7 @@
     <div class="nav">
       <flexbox :gutter="0" justify="0">
       <flexbox-item :span="4">
-        <router-link to="/safe/car">
+        <router-link :to="{ path: '/safe/car' }">
           <svg-icon icon-class="own_car@2x"></svg-icon>
           <p>汽车保险</p>
         </router-link>
@@ -24,7 +24,7 @@
           </router-link>
       </flexbox-item>
       <flexbox-item :span="4">
-          <router-link to="/gift">
+          <router-link :to="{path: '/gift'}">
             <svg-icon icon-class="gift@2x"></svg-icon>
             <p>福利社</p>
           </router-link>
@@ -34,7 +34,7 @@
   </div>
   <div class="item_box">
     <group>
-        <cell-box :is-link="true" link="/about">
+        <cell-box :is-link="true" :link="{path: '/about'}">
           <svg-icon icon-class="about@2x"></svg-icon>
           <span>关于我们</span>
         </cell-box>
@@ -95,7 +95,7 @@ export default {
   position: relative;
   width: 100%;
   height: 245px;
-  background: url('../../assets/own_bg.png') no-repeat center center;
+  background: url('../../../static/images/own_bg.png') no-repeat center center;
   background-size: 100% 100%;
   .avt_name{
     overflow: hidden;
@@ -145,6 +145,7 @@ export default {
   span{
     font-size: 15px;
     color:#333;
+    line-height: 24px;
   }
 }
 </style>

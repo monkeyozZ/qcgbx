@@ -17,7 +17,7 @@ export default {
 
 <style lang="less" scoped>
   .about{
-    height: 100vh;
+    height: e('calc(100vh - 40px)');
     background: #fff;
     padding: 20px 10px;
     p{

@@ -4,7 +4,7 @@
   <div>
     <div class="banner_box">
       <div class="banner">
-        <img src="@/assets/carsafe.png" alt="">
+        <img src="../../../static/images/carsafe.png" alt="">
         <h3 class="title">汪雷，您好！</h3>
         <p class="des">买车险，来牛小云，不仅仅是便宜！</p>
       </div>
@@ -14,13 +14,13 @@
         <h2>多家保险公司特惠报价</h2>
         <flexbox :gutter="0" justify="center">
           <flexbox-item :span="6">
-            <router-link to="buy">
+            <router-link :to="{path: 'buy'}">
               <svg-icon icon-class="carsafe@2x"></svg-icon>
               <span>买车险</span>
             </router-link>
           </flexbox-item>
           <flexbox-item :span="6">
-            <router-link to="compensate">
+            <router-link :to="{path: 'compensate'}">
               <svg-icon icon-class="money@2x"></svg-icon>
               <span>办理赔</span>
             </router-link>
@@ -53,9 +53,6 @@
 <script>
 import { Flexbox, FlexboxItem } from 'vux'
 import logo from '@/components/logo/index'
-import listimg from '@/assets/hot_list.png'
-import listimg2 from '@/assets/hot_list2.png'
-import listimg3 from '@/assets/hot_list3.png'
 export default {
   components: {
     Flexbox,
@@ -68,27 +65,27 @@ export default {
         {
           title: '中国平安大品牌，车险有保障',
           des: '来就送加油卡一张，机不可失！',
-          url: listimg
+          url: require('../../../static/images/hot_list.png')
         },
         {
           title: '中国平安大品牌，车险有保障',
           des: '来就送加油卡一张，机不可失！',
-          url: listimg2
+          url: require('../../../static/images/hot_list2.png')
         },
         {
           title: '中国平安大品牌，车险有保障',
           des: '来就送加油卡一张，机不可失！',
-          url: listimg3
+          url: require('../../../static/images/hot_list3.png')
         },
         {
           title: '中国平安大品牌，车险有保障',
           des: '来就送加油卡一张，机不可失！',
-          url: listimg3
+          url: require('../../../static/images/hot_list3.png')
         },
         {
           title: '中国平安大品牌，车险有保障',
           des: '来就送加油卡一张，机不可失！',
-          url: listimg3
+          url: require('../../../static/images/hot_list3.png')
         }
       ]
     }
@@ -215,7 +212,7 @@ export default {
             text-align: center;
             border-radius: 20px;
             color:#fff;
-            background: linear-gradient(left, rgb(240,152,25), rgb(253, 95, 81))
+            background-image: -webkit-linear-gradient(left,#f09819 25px,#fd5f51);
           }
         }
         .img_right{

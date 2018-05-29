@@ -40,7 +40,6 @@
 
 <script>
 import {Flexbox, FlexboxItem, Group, XInput, CellBox} from 'vux'
-import baseimg from '@/assets/avt.png'
 export default {
   components: {
     Flexbox,
@@ -60,7 +59,7 @@ export default {
       },
       issubmit: false,
       blobURL: '',
-      avtbaseimg: baseimg,
+      avtbaseimg: require('../../../static/images/avt.png'),
       btn_text: '获取验证码',
       isdisabled: false
     }
@@ -248,7 +247,7 @@ export default {
     border: none;
     border-radius: 50px;
     outline: none;
-    background: linear-gradient(left, rgb(240,152,25), rgb(253, 95, 81))
+    background: -webkit-linear-gradient(left, rgb(240,152,25), rgb(253, 95, 81))
   }
 }
 </style>

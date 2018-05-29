@@ -17,17 +17,17 @@ body,html{
 }
 @import '~vux/src/styles/reset.less';
 .swiper-pagination-bullet{
-  width:6px;
-  height: 6px;
-  background: rgba(255,255,255,0.6);
-  opacity: 1;
+  width:6px!important;
+  height: 6px!important;
+  background: rgba(255,255,255,0.6)!important;
+  opacity: 1!important;
 }
 .swiper-pagination-bullet-active{
-  width: 10px;
-  height: 6px;
-  border-radius: 5px;
-  background: rgba(255,255,255,1);
-  opacity: 1;
+  width: 10px!important;
+  height: 6px!important;
+  border-radius: 5px!important;
+  background: rgba(255,255,255,1)!important;
+  opacity: 1!important;
 }
 .form_box{
   i{

@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 const Datainit = async () => {
   return request({
-    url: 'static/product.json',
+    url: '/static/product.json',
     method: 'get',
     params: { 'id': 1 }
   })
@@ -10,7 +10,7 @@ const Datainit = async () => {
 
 const pull = async (id) => {
   return request({
-    url: 'static/nomore.json',
+    url: '/static/nomore.json',
     method: 'get',
     params: { 'id': id }
   })

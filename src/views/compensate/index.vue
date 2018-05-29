@@ -16,12 +16,6 @@
 
 <script>
 import {Flexbox, FlexboxItem, Grid, GridItem} from 'vux'
-import item1 from '@/assets/safe_item_1.png'
-import item2 from '@/assets/safe_item_2.png'
-import item3 from '@/assets/safe_item_3.png'
-import item4 from '@/assets/safe_item_4.png'
-import item5 from '@/assets/safe_item_5.png'
-import item6 from '@/assets/safe_item_6.png'
 export default {
   components: {
     Flexbox,
@@ -33,32 +27,32 @@ export default {
     return {
       safe_company_arr: [
         {
-          img: item1,
+          img: require('../../../static/images/safe_item_1.png'),
           name: '人保财险',
           phone: '95118'
         },
         {
-          img: item2,
+          img: require('../../../static/images/safe_item_2.png'),
           name: '太平洋产险',
           phone: '95500'
         },
         {
-          img: item3,
+          img: require('../../../static/images/safe_item_3.png'),
           name: '中国人寿财险',
           phone: '95119'
         },
         {
-          img: item4,
+          img: require('../../../static/images/safe_item_4.png'),
           name: '中华保险',
           phone: '95585'
         },
         {
-          img: item5,
+          img: require('../../../static/images/safe_item_5.png'),
           name: '大地保险',
           phone: '95590'
         },
         {
-          img: item6,
+          img: require('../../../static/images/safe_item_6.png'),
           name: '阳光财险',
           phone: '95510'
         }

@@ -22,7 +22,7 @@
           <div class="list_item" v-for="(item, index) in arr" :key="index">
             <flexbox :gutter="10" justify="center">
               <flexbox-item :span="3.4">
-                <img src="../../assets/pro_list.png">
+                <img src="../../../static/images/pro_list.png">
               </flexbox-item>
               <flexbox-item :span="8.25">
                 <h2 class="title">{{item.title}}</h2>
@@ -46,7 +46,7 @@
           <div class="list_item" v-for="(item, index) in arr" :key="index">
             <flexbox :gutter="10" justify="center">
               <flexbox-item :span="3.4">
-                <img src="../../assets/pro_list.png">
+                <img src="../../../static/images/pro_list.png">
               </flexbox-item>
               <flexbox-item :span="8.25">
                 <h2 class="title">{{item.title}}</h2>
@@ -70,7 +70,7 @@
           <div class="list_item" v-for="(item, index) in arr" :key="index">
             <flexbox :gutter="10" justify="center">
               <flexbox-item :span="3.4">
-                <img src="../../assets/pro_list.png">
+                <img src="../../../static/images/pro_list.png">
               </flexbox-item>
               <flexbox-item :span="8.25">
                 <h2 class="title">{{item.title}}</h2>
@@ -94,7 +94,7 @@
           <div class="list_item" v-for="(item, index) in arr" :key="index">
             <flexbox :gutter="10" justify="center">
               <flexbox-item :span="3.4">
-                <img src="../../assets/pro_list.png">
+                <img src="../../../static/images/pro_list.png">
               </flexbox-item>
               <flexbox-item :span="8.25">
                 <h2 class="title">{{item.title}}</h2>
@@ -118,7 +118,7 @@
           <div class="list_item" v-for="(item, index) in arr" :key="index">
             <flexbox :gutter="10" justify="center">
               <flexbox-item :span="3.4">
-                <img src="../../assets/pro_list.png">
+                <img src="../../../static/images/pro_list.png">
               </flexbox-item>
               <flexbox-item :span="8.25">
                 <h2 class="title">{{item.title}}</h2>
@@ -362,7 +362,7 @@ export default {
   position: relative;
   width: 100%;
   height: 100px;
-  background: linear-gradient(left, #6199f6, #8b39f6);
+  background: -webkit-linear-gradient(left, #6199f6, #8b39f6);
   .text{
     width: 70%;
     p{

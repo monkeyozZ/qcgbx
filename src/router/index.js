@@ -6,6 +6,7 @@ Vue.use(Router)
 
 const router = new Router({
   mode: 'history',
+  base: '/dist/',
   routes: [
     {
       path: '/',
@@ -29,25 +30,13 @@ const router = new Router({
           name: 'car',
           component: () => import('@/views/car/index'),
           meta: { title: '车险服务' }
-        }
-      ]
-    },
-    {
-      path: '/safe',
-      component: layout,
-      children: [
+        },
         {
           path: 'buy',
           name: 'buy',
           component: () => import('@/views/buy/index'),
           meta: { title: '买车险' }
-        }
-      ]
-    },
-    {
-      path: '/safe',
-      component: layout,
-      children: [
+        },
         {
           path: 'compensate',
           name: 'compensate',
@@ -79,8 +68,8 @@ const router = new Router({
       component: layout,
       children: [
         {
-          path: 'list',
-          name: 'ownlist',
+          path: 'center',
+          name: 'owncenter',
           component: () => import('@/views/own/index'),
           meta: { title: '我的' }
         }

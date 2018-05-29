@@ -4,13 +4,13 @@
       <ul>
         <li>
           <router-link to="/">
-            <img src="@/assets/gift_item_1.png" >
+            <img src="../../../static/images/gift_item_1.png" >
           </router-link>
           <p class="des">免费赠送您出行保障，点击立即领取，新人专享</p>
         </li>
         <li>
           <router-link to="/">
-          <img src="@/assets/gift_item_2.png" >
+          <img src="../../../static/images/gift_item_2.png" >
           </router-link >
           <p class="des">免费赠送您出行保障，点击立即领取，新人专享</p>
         </li>

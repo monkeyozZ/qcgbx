@@ -5,11 +5,11 @@
     <div>
       <swiper :options="swiperOption" ref="mySwiper">
         <!-- slides -->
-        <swiper-slide><img src="@/assets/banner@2x.png"></swiper-slide>
-        <swiper-slide><img src="@/assets/banner@2x.png"></swiper-slide>
-        <swiper-slide><img src="@/assets/banner@2x.png"></swiper-slide>
-        <swiper-slide><img src="@/assets/banner@2x.png"></swiper-slide>
-        <swiper-slide><img src="@/assets/banner@2x.png"></swiper-slide>
+        <swiper-slide><img src="../../../static/images/banner@2x.png"></swiper-slide>
+        <swiper-slide><img src="../../../static/images/banner@2x.png"></swiper-slide>
+        <swiper-slide><img src="../../../static/images/banner@2x.png"></swiper-slide>
+        <swiper-slide><img src="../../../static/images/banner@2x.png"></swiper-slide>
+        <swiper-slide><img src="../../../static/images/banner@2x.png"></swiper-slide>
         <!-- Optional controls -->
         <div class="swiper-pagination"  slot="pagination"></div>
       </swiper>
@@ -83,7 +83,7 @@
             <h2 class="item_title">为我父母挑保险</h2>
             <p class="des">为您推荐<span class="setcolor">健康险</span></p>
             <div class="list_item_box">
-              <img src="@/assets/item_1.png">
+              <img src="../../../static/images/item_1.png">
               <div class="item_right">
                 <h3>好医保 · 国华健康险</h3>
                 <p class="text">住院保证续保，不限病种，400万保额</p>
@@ -92,13 +92,13 @@
             </div>
           </div>
           <div class="adv">
-            <img src="@/assets/adv.png">
+            <img src="../../../static/images/adv.png">
           </div>
           <div class="list_item">
             <h2 class="item_title">为我孩子挑保险</h2>
             <p class="des">为您推荐<span class="setcolor">健康险</span></p>
             <div class="list_item_box">
-              <img src="@/assets/item_2.png">
+              <img src="../../../static/images/item_2.png">
               <div class="item_right">
                 <h3>好医保 · 国华健康险</h3>
                 <p class="text">住院保证续保，不限病种，400万保额</p>
@@ -110,7 +110,7 @@
             <h2 class="item_title">为我自己挑保险</h2>
             <p class="des">为您推荐<span class="setcolor">健康险</span></p>
             <div class="list_item_box">
-              <img src="@/assets/item_3.png">
+              <img src="../../../static/images/item_3.png">
               <div class="item_right">
                 <h3>好医保 · 国华健康险</h3>
                 <p class="text">住院保证续保，不限病种，400万保额</p>
@@ -119,7 +119,7 @@
             </div>
           </div>
           <div class="adv">
-            <img src="@/assets/adv2.png">
+            <img src="../../../static/images/adv2.png">
           </div>
         </div>
 
@@ -128,23 +128,23 @@
           <scroller lock-y :scrollbar-x=false>
           <div class="box">
             <div class="box-item">
-             <img src="@/assets/hot_item.png">
+             <img src="../../../static/images/hot_item.png">
               <p>好医保·国华最好的保险</p>
             </div>
             <div class="box-item">
-             <img src="@/assets/hot_item.png">
+             <img src="../../../static/images/hot_item.png">
               <p>好医保·国华最好的保险</p>
             </div>
             <div class="box-item">
-             <img src="@/assets/hot_item.png">
+             <img src="../../../static/images/hot_item.png">
               <p>好医保·国华最好的保险</p>
             </div>
             <div class="box-item">
-             <img src="@/assets/hot_item.png">
+             <img src="../../../static/images/hot_item.png">
               <p>好医保·国华最好的保险</p>
             </div>
             <div class="box-item">
-             <img src="@/assets/hot_item.png">
+             <img src="../../../static/images/hot_item.png">
               <p>好医保·国华最好的保险</p>
             </div>
           </div>
@@ -159,7 +159,7 @@
 <script>
 import { Grid, GridItem, Scroller } from 'vux'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
-import logo from '@/components/logo/index'
+import logo from '../../components/logo/index'
 export default {
   components: {
     swiper,

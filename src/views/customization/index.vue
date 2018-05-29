@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="banner">
-      <img src="@/assets/customization.png">
+      <img src="../../../static/images/customization.png">
     </div>
 
     <div class="customization_form">
@@ -278,7 +278,7 @@ export default {
     border: none;
     border-radius: 50px;
     outline: none;
-    background: linear-gradient(left, rgb(240,152,25), rgb(253, 95, 81))
+    background: -webkit-linear-gradient(left, rgb(240,152,25), rgb(253, 95, 81))
   }
   .select_box.vux-tap-active:active,.select_box.weui-cell_access{
     background-color: #fff;
