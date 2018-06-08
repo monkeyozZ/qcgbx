@@ -176,6 +176,7 @@ export default {
             this.isdisabled = true
             if (n === 0) {
               this.btn_text = '获取验证码'
+              this.isdisabled = false
               clearInterval(t)
               n = 30
             }
