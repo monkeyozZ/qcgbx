@@ -5,11 +5,11 @@
     <div>
       <swiper :options="swiperOption" ref="mySwiper">
         <!-- slides -->
-        <swiper-slide><img src="../../../static/images/banner@2x.png"></swiper-slide>
-        <swiper-slide><img src="../../../static/images/banner@2x.png"></swiper-slide>
-        <swiper-slide><img src="../../../static/images/banner@2x.png"></swiper-slide>
-        <swiper-slide><img src="../../../static/images/banner@2x.png"></swiper-slide>
-        <swiper-slide><img src="../../../static/images/banner@2x.png"></swiper-slide>
+        <swiper-slide v-for="(item, index) in bannerlist" :key="index">
+          <a :href="item.url">
+            <img :src="baseimgurl + item.imgUrl">
+          </a>
+          </swiper-slide>
         <!-- Optional controls -->
         <div class="swiper-pagination"  slot="pagination"></div>
       </swiper>
@@ -62,64 +62,76 @@
           <h1 class="title">牛小云福利社</h1>
           <scroller lock-y :scrollbar-x=false>
           <div class="box">
-            <div class="box-item">
-              <p>免费领取意外险</p>
-              <span>出行意外保障</span>
-            </div>
-            <div class="box-item">
+            <a :href="item.url" v-for="(item, index) in welfarelist" :key="index">
+              <div class="box-item" :style="{background: 'url(' + baseimgurl +  item.lImgUrl+ ')', 'background-repeat': 'no-repeat', 'background-position': 'right bottom'}">
+                <p>{{item.title}}</p>
+                <span>{{item.subtitle}}</span>
+              </div>
+            </a>
+            <!-- <div class="box-item">
               <p>宝贝守护计划</p>
               <span>赠送10万保障</span>
             </div>
             <div class="box-item">
               <p>宝贝守护计划</p>
               <span>赠送10万保障</span>
-            </div>
+            </div> -->
           </div>
         </scroller>
         </div>
 
         <div class="list_box">
-          <div class="list_item">
-            <h2 class="item_title">为我父母挑保险</h2>
-            <p class="des">为您推荐<span class="setcolor">健康险</span></p>
-            <div class="list_item_box">
-              <img src="../../../static/images/item_1.png">
-              <div class="item_right">
-                <h3>好医保 · 国华健康险</h3>
-                <p class="text">住院保证续保，不限病种，400万保额</p>
-                <p class="tag">中国平安</p>
+            <div class="list_item" v-if="recommendproducts[0]">
+              <h2 class="item_title">为我父母挑保险</h2>
+              <p class="des">为您推荐<span class="setcolor">健康险</span></p>
+              <a :href="recommendproducts[0].url">
+              <div class="list_item_box">
+                <img :src="baseimgurl + recommendproducts[0].imgUrl">
+                <div class="item_right">
+                  <h3>{{recommendproducts[0].title}}</h3>
+                  <p class="text">{{recommendproducts[0].subtitle}}</p>
+                  <p class="tag">{{recommendproducts[0].company}}</p>
+                </div>
               </div>
+              </a>
             </div>
+          <div class="adv" v-if="advertisinglist[0]">
+            <a :href="advertisinglist[0].url">
+              <img :src="baseimgurl + advertisinglist[0].imgUrl">
+            </a>
           </div>
-          <div class="adv">
-            <img src="../../../static/images/adv.png">
-          </div>
-          <div class="list_item">
+          <div class="list_item" v-if="recommendproducts[1]">
             <h2 class="item_title">为我孩子挑保险</h2>
             <p class="des">为您推荐<span class="setcolor">健康险</span></p>
-            <div class="list_item_box">
-              <img src="../../../static/images/item_2.png">
-              <div class="item_right">
-                <h3>好医保 · 国华健康险</h3>
-                <p class="text">住院保证续保，不限病种，400万保额</p>
-                <p class="tag">中国平安</p>
+            <a :href="recommendproducts[1].url">
+              <div class="list_item_box">
+                <img :src="baseimgurl + recommendproducts[1].imgUrl">
+                <div class="item_right">
+                  <h3>{{recommendproducts[1].title}}</h3>
+                  <p class="text">{{recommendproducts[1].subtitle}}</p>
+                  <p class="tag">{{recommendproducts[1].company}}</p>
+                </div>
               </div>
-            </div>
+              </a>
           </div>
-          <div class="list_item">
+          <div class="list_item" v-if="recommendproducts[2]">
             <h2 class="item_title">为我自己挑保险</h2>
             <p class="des">为您推荐<span class="setcolor">健康险</span></p>
-            <div class="list_item_box">
-              <img src="../../../static/images/item_3.png">
-              <div class="item_right">
-                <h3>好医保 · 国华健康险</h3>
-                <p class="text">住院保证续保，不限病种，400万保额</p>
-                <p class="tag">中国平安</p>
+            <a :href="recommendproducts[2].url">
+              <div class="list_item_box">
+                <img :src="baseimgurl + recommendproducts[2].imgUrl">
+                <div class="item_right">
+                  <h3>{{recommendproducts[2].title}}</h3>
+                  <p class="text">{{recommendproducts[2].subtitle}}</p>
+                  <p class="tag">{{recommendproducts[2].company}}</p>
+                </div>
               </div>
-            </div>
+              </a>
           </div>
-          <div class="adv">
-            <img src="../../../static/images/adv2.png">
+          <div class="adv" v-if="advertisinglist[1]">
+            <a :href="advertisinglist[1].url">
+              <img :src="baseimgurl + advertisinglist[1].imgUrl">
+            </a>
           </div>
         </div>
 
@@ -127,25 +139,9 @@
            <h1 class="title">热销Top5</h1>
           <scroller lock-y :scrollbar-x=false>
           <div class="box">
-            <div class="box-item">
-             <img src="../../../static/images/hot_item.png">
-              <p>好医保·国华最好的保险</p>
-            </div>
-            <div class="box-item">
-             <img src="../../../static/images/hot_item.png">
-              <p>好医保·国华最好的保险</p>
-            </div>
-            <div class="box-item">
-             <img src="../../../static/images/hot_item.png">
-              <p>好医保·国华最好的保险</p>
-            </div>
-            <div class="box-item">
-             <img src="../../../static/images/hot_item.png">
-              <p>好医保·国华最好的保险</p>
-            </div>
-            <div class="box-item">
-             <img src="../../../static/images/hot_item.png">
-              <p>好医保·国华最好的保险</p>
+            <div class="box-item" v-for="(item, index) in hotProducts" :key="index">
+             <img :src="baseimgurl + item.imgUrl">
+              <p>{{item.title}}</p>
             </div>
           </div>
         </scroller>
@@ -157,6 +153,7 @@
 </template>
 
 <script>
+import indexApi from '@/api/index'
 import { Grid, GridItem, Scroller } from 'vux'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import logo from '../../components/logo/index'
@@ -171,19 +168,53 @@ export default {
   },
   data () {
     return {
+      baseimgurl: process.env.BASE_API,
       swiperOption: {
         height: 135,
         autoplay: true,
         slidesPerView: 'auto',
         centeredSlides: true,
-        loop: true,
+        // loop: true,
         spaceBetween: 5,
         pagination: {
           el: '.swiper-pagination',
           clickable: true
         }
-      }
+      },
+      bannerlist: [{}],
+      welfarelist: [],
+      hotProducts: [],
+      recommendproducts: [{}, {}, {}],
+      advertisinglist: [{}, {}]
     }
+  },
+  methods: {
+    showloading () {
+      this.$vux.loading.show({
+        text: '加载中...'
+      })
+    },
+    hideloading () {
+      this.$vux.loading.hide()
+    },
+    getdata () {
+      this.showloading()
+      indexApi.getData().then((res) => {
+        if (res.data.code === 0) {
+          this.hideloading()
+          this.bannerlist = res.data.data.bannerList
+          this.welfarelist = res.data.data.welfareList
+          this.hotProducts = res.data.data.hotProducts
+          this.recommendproducts = res.data.data.recommendProducts
+          this.advertisinglist = res.data.data.advertisingList
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    }
+  },
+  mounted () {
+    this.getdata()
   }
 }
 </script>
@@ -312,6 +343,9 @@ span{
       border: 1px solid #e6e9f0;
       border-radius: 4px;
       img{
+        display: inline-block;
+        width: 115px;
+        height: 135px;
         float: left;
         margin-right: 10px;
       }
@@ -367,13 +401,11 @@ span{
     line-height: 22px;
   }
   .box {
-  height: 135px;
   position: relative;
   width: 810px;
 }
 .box-item {
   width: 150px;
-  height: 135px;
   box-sizing: border-box;
   display:inline-block;
   margin-left: 10px;

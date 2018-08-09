@@ -3,7 +3,8 @@ import axios from 'axios'
 const service = axios.create({
   baseURL: process.env.BASE_API,
   timeout: 5000, // request timeout
-  headers: { 'Content-Type': 'application/json' }
+  headers: { 'Content-Type': 'application/json' },
+  withCredentials: true
 })
 
 service.interceptors.request.use(config => {

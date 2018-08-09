@@ -3,14 +3,16 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './store/index'
 import './icons' // icon
 import 'swiper/dist/css/swiper.css'
 import scroll from '@/components/scroll/index'
 import { Checkbox } from 'element-ui'
-import { ToastPlugin } from 'vux'
+import { ToastPlugin, LoadingPlugin } from 'vux'
 Vue.component('scroll', scroll)
 Vue.use(ToastPlugin, { position: 'top', width: '80%' })
 Vue.use(Checkbox)
+Vue.use(LoadingPlugin)
 
 Vue.filter('sub', function (str) {
   if (str.length > 30) {
@@ -26,6 +28,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

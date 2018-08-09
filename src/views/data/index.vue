@@ -9,23 +9,22 @@
                <span>头像</span>
             </flexbox-item>
             <flexbox-item :span="6">
-                <label for="file" class="avt_box">
-                  <img :src="blobURL?blobURL:avtbaseimg">
+                <label class="avt_box">
+                  <img :src="user_info.headimgurl?user_info.headimgurl:avtbaseimg">
                 </label>
-                <input type="file" id="file" accept="image/*" @change="handleFileChange " ref="img" multiple="multiple">
             </flexbox-item>
           </flexbox>
         </cell-box>
-        <x-input title="姓名" placeholder="请输入您的姓名" v-model="Formdata.username"></x-input>
-        <x-input title="身份证" placeholder="请输入真实身份证号" v-model="Formdata.idcard" type="tel" :max="18"></x-input>
-        <x-input title="手机号" placeholder="请输入您的手机号" v-model="Formdata.phone" type="tel" :max="11"></x-input>
+        <x-input title="姓名" placeholder="请输入您的姓名" v-model="Formdata.name"></x-input>
+        <x-input title="身份证" placeholder="请输入真实身份证号" v-model="Formdata.idCard" type="tel" :max="18"></x-input>
+        <x-input title="手机号" placeholder="请输入您的手机号" v-model="Formdata.mobile" type="tel" :max="11"></x-input>
         <cell-box class="select_box">
           <flexbox :gutter="0" justify="center">
             <flexbox-item :span="4">
                <span class="code_title">手机验证码</span>
             </flexbox-item>
             <flexbox-item :span="5">
-              <input type="tel" placeholder="请输入手机验证码" class="code" v-model="Formdata.code">
+              <input type="tel" placeholder="请输入手机验证码" class="code" maxlength="4" v-model="Formdata.code">
             </flexbox-item>
             <flexbox-item :span="3">
               <button class="get_code" @click="getcode" :disabled="isdisabled">{{btn_text}}</button>
@@ -39,7 +38,9 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 import {Flexbox, FlexboxItem, Group, XInput, CellBox} from 'vux'
+import dataApi from '@/api/data'
 export default {
   components: {
     Flexbox,
@@ -51,10 +52,9 @@ export default {
   data () {
     return {
       Formdata: {
-        imgfile: '',
-        username: '',
-        idcard: '',
-        phone: '',
+        name: '',
+        idCard: '',
+        mobile: '',
         code: ''
       },
       issubmit: false,
@@ -64,11 +64,24 @@ export default {
       isdisabled: false
     }
   },
+  computed: {
+    ...mapGetters({
+      user_info: 'user_info'
+    })
+  },
   methods: {
+    showloading () {
+      this.$vux.loading.show({
+        text: '努力提交中...'
+      })
+    },
+    hideloading () {
+      this.$vux.loading.hide()
+    },
     myalert (text) {
       this.$vux.toast.text(text, 'top')
     },
-    handleFileChange (e) {
+    /* handleFileChange (e) {
       this.imgfile = e.target.files[0]
       let URL = window.URL || window.webkitURL
       if (URL) {
@@ -77,7 +90,7 @@ export default {
         this.blobURL = URL.createObjectURL(file)
         console.log(file)
       }
-    },
+    }, */
     checkIdcard (value) {
       if (value.length === 0) {
         return true
@@ -124,66 +137,98 @@ export default {
     },
     submitForm () {
       let reg = /^(13[0-9]|14[5|7]|15[0-9]|17[0-9]|18[0-9])\d{8}$/
-      if (this.Formdata.username === '') {
+      if (this.Formdata.name === '') {
         this.myalert('请填写姓名')
         return false
       } else {
         let ischar = /^[\u4e00-\u9fa5]{2,6}$/
-        let r = ischar.test(this.Formdata.username)
+        let r = ischar.test(this.Formdata.name)
         if (!r) {
           this.myalert('请输入正确姓名')
           return false
         }
       }
-      if (this.Formdata.idcard === '') {
+      if (this.Formdata.idCard === '') {
         this.myalert('请输入身份证号码')
         return false
       } else {
-        let res = this.checkIdcard(this.Formdata.idcard)
+        let res = this.checkIdcard(this.Formdata.idCard)
         if (!res) {
           this.myalert('身份证号码格式错误')
           return false
         }
       }
-      if (this.Formdata.phone === '') {
+      if (this.Formdata.mobile === '') {
         this.myalert('请填写手机号')
         return false
       } else {
-        let res = reg.test(this.Formdata.phone)
+        let res = reg.test(this.Formdata.mobile)
         if (!res) {
           this.myalert('手机号格式有误')
           return false
-        } else {
-          this.checkcode = true
         }
+      }
+      if (this.Formdata.code === '') {
+        this.myalert('请填写验证码')
+        return false
+      } else {
+        this.$set(this.Formdata, 'openId', this.user_info.openid)
+        this.showloading()
+        dataApi.savedata(this.Formdata).then((res) => {
+          if (res.data.code === 0) {
+            this.hideloading()
+            this.$route.push('/data')
+          }
+        }).catch((err) => {
+          console.log(err)
+        })
       }
     },
     getcode () {
       let reg = /^(13[0-9]|14[5|7]|15[0-9]|17[0-9]|18[0-9])\d{8}$/
-      if (this.Formdata.phone === '') {
+      if (this.Formdata.mobile === '') {
         this.myalert('请填写手机号')
         return false
       } else {
-        let res = reg.test(this.Formdata.phone)
+        let res = reg.test(this.Formdata.mobile)
         if (!res) {
           this.myalert('手机号格式有误')
           return false
         } else {
-          let n = 30
-          let t = setInterval(() => {
-            n--
-            this.btn_text = n + 's'
-            this.isdisabled = true
-            if (n === 0) {
-              this.btn_text = '获取验证码'
-              this.isdisabled = false
-              clearInterval(t)
-              n = 30
+          dataApi.getcode(this.Formdata.mobile).then((res) => {
+            if (res.data.code === 0) {
+              let n = 30
+              let t = setInterval(() => {
+                n--
+                this.btn_text = n + 's'
+                this.isdisabled = true
+                if (n === 0) {
+                  this.btn_text = '获取验证码'
+                  this.isdisabled = false
+                  clearInterval(t)
+                  n = 30
+                }
+              }, 1000)
             }
-          }, 1000)
+          }).catch((err) => {
+            console.log(err)
+          })
         }
       }
+    },
+    getinfo () {
+      dataApi.getinfo(this.user_info.openid).then((res) => {
+        if (res.data.code === 0) {
+          console.log(res.data.data.name)
+          this.Formdata.name = res.data.data.name
+          this.Formdata.idCard = res.data.data.idCard
+          this.Formdata.mobile = res.data.data.mobile
+        }
+      })
     }
+  },
+  mounted () {
+    this.getinfo()
   }
 }
 </script>
@@ -196,9 +241,6 @@ export default {
   font-weight: 400;
 }
 .data_box{
-  #file{
-    display: none;
-  }
   .avt_box{
     display: inline-block;
     float: right;

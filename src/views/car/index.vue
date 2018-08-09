@@ -5,7 +5,7 @@
     <div class="banner_box">
       <div class="banner">
         <img src="../../../static/images/carsafe.png" alt="">
-        <h3 class="title">汪雷，您好！</h3>
+        <h3 class="title">{{user_info.nickname?user_info.nickname:basename}}，您好！</h3>
         <p class="des">买车险，来牛小云，不仅仅是便宜！</p>
       </div>
     </div>
@@ -35,13 +35,14 @@
           <li v-for="(item,index) in list_arr" :key="index">
             <div class="text_left">
               <h2 class="title">{{item.title}}</h2>
-              <p class="des">{{item.des}}</p>
-              <router-link to="" class="btn">立即购买</router-link>
+              <p class="des">{{item.subtitle}}</p>
+              <a :href="item.url" class="btn">立即购买</a>
             </div>
             <div class="img_right">
-              <img :src="item.url">
+              <img :src="baseimgurl + item.imgUrl">
             </div>
           </li>
+          <li v-show="list_arr.length === 0" style="text-align:center;color:#9e9696;font-size:14px;">暂无数据！</li>
         </ul>
       </div>
     </div>
@@ -53,6 +54,8 @@
 <script>
 import { Flexbox, FlexboxItem } from 'vux'
 import logo from '@/components/logo/index'
+import productApi from '@/api/product.js'
+import {mapGetters} from 'vuex'
 export default {
   components: {
     Flexbox,
@@ -61,34 +64,48 @@ export default {
   },
   data () {
     return {
-      list_arr: [
-        {
-          title: '中国平安大品牌，车险有保障',
-          des: '来就送加油卡一张，机不可失！',
-          url: require('../../../static/images/hot_list.png')
-        },
-        {
-          title: '中国平安大品牌，车险有保障',
-          des: '来就送加油卡一张，机不可失！',
-          url: require('../../../static/images/hot_list2.png')
-        },
-        {
-          title: '中国平安大品牌，车险有保障',
-          des: '来就送加油卡一张，机不可失！',
-          url: require('../../../static/images/hot_list3.png')
-        },
-        {
-          title: '中国平安大品牌，车险有保障',
-          des: '来就送加油卡一张，机不可失！',
-          url: require('../../../static/images/hot_list3.png')
-        },
-        {
-          title: '中国平安大品牌，车险有保障',
-          des: '来就送加油卡一张，机不可失！',
-          url: require('../../../static/images/hot_list3.png')
-        }
-      ]
+      list_arr: [],
+      baseimgurl: process.env.BASE_API,
+      basename: '游客',
+      limitQuery: {
+        pageSize: 20,
+        pageNumber: 1
+      }
     }
+  },
+  computed: {
+    ...mapGetters({
+      user_info: 'user_info'
+    })
+  },
+  methods: {
+    showloading () {
+      this.$vux.loading.show({
+        text: '加载中...'
+      })
+    },
+    hideloading () {
+      this.$vux.loading.hide()
+    },
+    getlist () {
+      this.showloading()
+      let obj = {
+        category: 1,
+        pageSize: this.limitQuery.pageSize,
+        pageNumber: this.limitQuery.pageNumber
+      }
+      productApi.getlist(obj).then((res) => {
+        this.hideloading()
+        if (res.data.code === 0) {
+          this.list_arr = res.data.data
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    }
+  },
+  mounted () {
+    this.getlist()
   }
 }
 </script>

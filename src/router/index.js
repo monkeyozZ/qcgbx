@@ -1,12 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import layout from '@/views/layout/index'
+import Auth from '../utils/auth'
+import store from '../store'
+import authApi from '@/api/auth'
 
 Vue.use(Router)
 
 const router = new Router({
   mode: 'history',
-  base: '/dist/',
+  base: '/bx/',
   routes: [
     {
       path: '/',
@@ -17,7 +20,7 @@ const router = new Router({
           path: 'index',
           name: 'index',
           component: () => import('@/views/index/index'),
-          meta: {title: '牛小云保险'}
+          meta: {title: '牛小云'}
         }
       ]
     },
@@ -96,6 +99,37 @@ const router = new Router({
   ]
 })
 router.beforeEach((to, from, next) => {
+  let status = Auth.isLogin() ? Auth.isLogin() : 'false'
+
+  if (to.query.code && JSON.parse(status) === false) {
+    Auth.setLoginStatus(true)
+    store.dispatch('setcode', to.query.code)
+    next()
+  }
+
+  if (JSON.parse(status)) {
+    store.dispatch('setLoginstatus', true)
+    authApi.getuserinfo().then((res) => {
+      if (res.data.code === 0) {
+        store.dispatch('inituserinfo', res.data.data)
+      } else {
+        Auth.setLoginStatus(false)
+      }
+    }).catch((err) => {
+      console.log(err)
+    })
+    next()
+  }
+
+  status = Auth.isLogin() ? Auth.isLogin() : 'false'
+
+  if (JSON.parse(status) === false) {
+    let fullurl = to.fullPath
+    let gourl = encodeURI('http://niuxiaoyun.qcgjr.com/bx' + fullurl)
+    window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5fefcf409f90955a&redirect_uri=' + gourl + '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
+    return false
+  }
+  next()
   if (to.meta.title) {
     document.title = to.meta.title
   }

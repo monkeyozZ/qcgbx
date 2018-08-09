@@ -4,10 +4,10 @@
     <div class="avt_name">
       <div  class="avt">
         <router-link to="/data">
-           <img src="../../../static/images/avt.png" alt="头像">
+           <img :src="user_info.headimgurl?user_info.headimgurl:baseavt" alt="头像">
         </router-link>
       </div>
-      <p class="name">汪雷书记</p>
+      <p class="name">{{user_info.nickname?user_info.nickname:basename}}</p>
     </div>
     <div class="nav">
       <flexbox :gutter="0" justify="0">
@@ -52,15 +52,26 @@
         </cell-box>
     </group>
   </div>
-  <alert v-model="show1" :title="'商务合作'">{{hezuo}}</alert>
-  <alert v-model="show2" :title="'法务维权'">{{hezuo}}</alert>
-  <alert v-model="show3" :title="'联系我们'">{{hezuo}}</alert>
+  <div v-transfer-dom>
+    <alert v-model="show1" mask-transition="vux-dialog" :title="'商务合作'">{{business}}</alert>
+  </div>
+  <div v-transfer-dom>
+    <alert v-model="show2" mask-transition="vux-dialog" :title="'法务维权'">{{legal}}</alert>
+  </div>
+  <div v-transfer-dom>
+    <alert v-model="show3" mask-transition="vux-dialog" :title="'联系我们'">{{contact}}</alert>
+  </div>
 </div>
 </template>
 
 <script>
-import {Flexbox, FlexboxItem, CellBox, Group, Alert} from 'vux'
+import {Flexbox, FlexboxItem, CellBox, Group, Alert, TransferDom} from 'vux'
+import {mapGetters} from 'vuex'
+import personalApi from '@/api/personalCenter'
 export default {
+  directives: {
+    TransferDom
+  },
   components: {
     Flexbox,
     FlexboxItem,
@@ -70,11 +81,20 @@ export default {
   },
   data () {
     return {
+      baseavt: require('../../../static/images/avt.png'),
+      basename: '未登录用户',
       show1: false,
       show2: false,
       show3: false,
-      hezuo: '邮箱：law@qincengu.com'
+      contact: '',
+      legal: '',
+      business: ''
     }
+  },
+  computed: {
+    ...mapGetters({
+      user_info: 'user_info'
+    })
   },
   methods: {
     showcontact () {
@@ -85,7 +105,21 @@ export default {
     },
     showfawu () {
       this.show2 = true
+    },
+    getlist () {
+      personalApi.getdata().then((res) => {
+        if (res.data.code === 0) {
+          this.contact = res.data.data.contactUs
+          this.legal = res.data.data.legal
+          this.business = res.data.data.business
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
     }
+  },
+  mounted () {
+    this.getlist()
   }
 }
 </script>

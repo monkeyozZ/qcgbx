@@ -4,5 +4,5 @@ const prodEnv = require('./prod.env')
 
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
-  BASE_API: '"http://wowmonkey.cn/dist/"'
+  BASE_API: '"http://172.16.0.91:8082"'
 })

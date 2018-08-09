@@ -6,9 +6,9 @@
 
     <div class="customization_form">
       <group>
-        <x-input title="您的姓名" placeholder="请输入您的姓名" v-model="Formdata.username"></x-input>
-        <x-input title="您的身份证号" placeholder="身份证号便于有效投保" v-model="Formdata.idcard" type="tel" :max="18"></x-input>
-        <x-address title="您长居地点" :list="addressData" placeholder="请选择地点" v-model="Formdata.citycode"></x-address>
+        <x-input title="您的姓名" placeholder="请输入您的姓名" v-model="Formdata.realName"></x-input>
+        <x-input title="您的身份证号" placeholder="身份证号便于有效投保" v-model="Formdata.idNo" type="tel" :max="18"></x-input>
+        <x-address ref="address" title="您长居地点" :list="addressData" placeholder="请选择地点" v-model=" citycode"></x-address>
         <cell-box is-link class="select_box">
           <flexbox :gutter="0" justify="center">
             <flexbox-item :span="6">
@@ -19,10 +19,10 @@
             </flexbox-item>
           </flexbox>
         </cell-box>
-        <x-input title="您的手机号" placeholder="请输入您的手机号" type="tel" :max="11" v-model="Formdata.phone"></x-input>
+        <x-input title="您的手机号" placeholder="请输入您的手机号" type="tel" :max="11" v-model="Formdata.mobile"></x-input>
       </group>
       <div class="xieyi_box">
-        <check-icon :value.sync="Formdata.xieyi">我已阅读并同意</check-icon>
+        <check-icon :value.sync="xieyi">我已阅读并同意</check-icon>
         <a href="">《用户协议》</a>
       </div>
       <button class="btn" type="button" @click="submitForm">提交</button>
@@ -33,16 +33,16 @@
           <h2 class="title">保障需求</h2>
           <p class="des">选择你的意向需求（可多选）</p>
           <flexbox :gutter="0" justify="center">
-            <flexbox-item :span="6"><el-checkbox v-model="Formdata.demand.yiliao">重疾医疗</el-checkbox></flexbox-item>
-            <flexbox-item :span="6"><el-checkbox v-model="Formdata.demand.yiwai">意外伤害</el-checkbox></flexbox-item>
+            <flexbox-item :span="6"><el-checkbox true-label="重疾医疗" false-label="" v-model="demand.yiliao">重疾医疗</el-checkbox></flexbox-item>
+            <flexbox-item :span="6"><el-checkbox true-label="意外伤害" false-label="" v-model="demand.yiwai">意外伤害</el-checkbox></flexbox-item>
           </flexbox>
           <flexbox :gutter="0" justify="center">
-            <flexbox-item :span="6"><el-checkbox v-model="Formdata.demand.lvxing">旅游出行</el-checkbox></flexbox-item>
-            <flexbox-item :span="6"><el-checkbox v-model="Formdata.demand.renshou">人身寿险</el-checkbox></flexbox-item>
+            <flexbox-item :span="6"><el-checkbox true-label="旅游出行" false-label="" v-model="demand.lvxing">旅游出行</el-checkbox></flexbox-item>
+            <flexbox-item :span="6"><el-checkbox true-label="人身寿险" false-label="" v-model="demand.renshou">人身寿险</el-checkbox></flexbox-item>
           </flexbox>
           <flexbox :gutter="0" justify="center">
-            <flexbox-item :span="6"><el-checkbox v-model="Formdata.demand.licai">理财分红</el-checkbox></flexbox-item>
-            <flexbox-item :span="6"><el-checkbox v-model="Formdata.demand.shaoer">少儿</el-checkbox></flexbox-item>
+            <flexbox-item :span="6"><el-checkbox true-label="理财分红" false-label="" v-model="demand.licai">理财分红</el-checkbox></flexbox-item>
+            <flexbox-item :span="6"><el-checkbox true-label="少儿" false-label="" v-model="demand.shaoer">少儿</el-checkbox></flexbox-item>
           </flexbox>
         </confirm>
     </div>
@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import customApi from '@/api/custom'
 import {Flexbox, FlexboxItem, CheckIcon, Group, XInput, XAddress, ChinaAddressV4Data, CellBox, Confirm} from 'vux'
 export default {
   components: {
@@ -67,45 +68,72 @@ export default {
     return {
       addressData: ChinaAddressV4Data,
       isshow: false,
-      Formdata: {
-        username: '',
-        idcard: '',
-        citycode: [],
-        demand: {
-          yiliao: false,
-          yiwai: false,
-          lvxing: false,
-          renshou: false,
-          licai: false,
-          shaoer: false
-        },
-        phone: '',
-        xieyi: false
+      demand: {
+        yiliao: '',
+        yiwai: '',
+        lvxing: '',
+        renshou: '',
+        licai: '',
+        shaoer: ''
       },
+      citycode: [],
+      Formdata: {
+        realName: '',
+        idNo: '',
+        address: '',
+        demand: '',
+        mobile: ''
+      },
+      xieyi: false,
       arr: [],
       issubmit: false
     }
   },
-  computed: {
-    selobj: function () {
-      return this.Formdata.demand
-    }
-  },
   watch: {
-    'selobj': {
+    demand: {
       handler: function () {
         this.arr = []
+        this.Formdata.demand = ''
+        for (const key in this.demand) {
+          if (this.demand[key] !== '') {
+            this.Formdata.demand += this.demand[key] + ','
+          }
+        }
+      },
+      deep: true
+    },
+    citycode: {
+      handler () {
+        this.Formdata.address = this.$refs.address.nameValue
       },
       deep: true
     }
   },
   methods: {
+    save () {
+      customApi.savedata(this.Formdata).then((res) => {
+        if (res.data.code === 0) {
+          this.myalert('提交成功')
+          this.Formdata.address = ''
+          this.citycode = []
+          this.Formdata.idNo = ''
+          this.Formdata.demand = ''
+          for (const key in this.demand) {
+            this.demand[key] = ''
+          }
+          this.Formdata.mobile = ''
+          this.Formdata.realName = ''
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
     show () {
       this.isshow = true
     },
     resetItem () {
       for (const key in this.demand) {
-        this.demand[key] = false
+        this.demand[key] = ''
       }
     },
     myalert (text) {
@@ -157,7 +185,7 @@ export default {
     },
     hasselected (val) {
       for (const key in val) {
-        if (val[key] !== false) {
+        if (val[key] !== '') {
           this.arr.push(true)
         } else {
           this.arr.push(false)
@@ -170,41 +198,41 @@ export default {
     },
     submitForm () {
       let reg = /^(13[0-9]|14[5|7]|15[0-9]|17[0-9]|18[0-9])\d{8}$/
-      if (this.Formdata.xieyi === true) {
-        if (this.Formdata.username === '') {
+      if (this.xieyi === true) {
+        if (this.Formdata.realName === '') {
           this.myalert('请填写姓名')
           return false
         } else {
           let ischar = /^[\u4e00-\u9fa5]{2,6}$/
-          let r = ischar.test(this.Formdata.username)
+          let r = ischar.test(this.Formdata.realName)
           if (!r) {
             this.myalert('请输入正确姓名')
             return false
           }
         }
-        if (this.Formdata.idcard === '') {
+        if (this.Formdata.idNo === '') {
           this.myalert('请输入身份证号码')
           return false
         } else {
-          let res = this.checkIdcard(this.Formdata.idcard)
+          let res = this.checkIdcard(this.Formdata.idNo)
           if (!res) {
             this.myalert('身份证号码格式错误')
             return false
           }
         }
-        if (this.Formdata.citycode.length === 0) {
+        if (this.Formdata.address === '') {
           this.myalert('请选择城市')
           return false
         }
-        if (!this.hasselected(this.Formdata.demand)) {
+        if (!this.hasselected(this.demand)) {
           this.myalert('至少选择一项保障需求')
           return false
         }
-        if (this.Formdata.phone === '') {
+        if (this.Formdata.mobile === '') {
           this.myalert('请填写手机号')
           return false
         } else {
-          let res = reg.test(this.Formdata.phone)
+          let res = reg.test(this.Formdata.mobile)
           if (!res) {
             this.myalert('手机号格式有误')
             return false
@@ -213,7 +241,7 @@ export default {
           }
         }
         if (this.issubmit) {
-          console.log('success')
+          this.save()
         }
       } else {
         this.myalert('请阅读并同意用户协议')

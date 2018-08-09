@@ -1,10 +1,10 @@
 import request from '@/utils/request'
 
-const getlist = async (obj) => {
+const getData = async (obj) => {
   return request({
-    url: '/product/insurance',
+    url: '/index_h/app_main',
     method: 'post',
     data: obj
   })
 }
-export default { getlist }
+export default { getData }

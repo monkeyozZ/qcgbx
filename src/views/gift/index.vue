@@ -2,17 +2,11 @@
   <div>
     <div class="item_box">
       <ul>
-        <li>
-          <router-link to="/">
-            <img src="../../../static/images/gift_item_1.png" >
-          </router-link>
-          <p class="des">免费赠送您出行保障，点击立即领取，新人专享</p>
-        </li>
-        <li>
-          <router-link to="/">
-          <img src="../../../static/images/gift_item_2.png" >
-          </router-link >
-          <p class="des">免费赠送您出行保障，点击立即领取，新人专享</p>
+        <li v-for="(item, index) in giftarr" :key="index">
+          <a :href="item.url">
+            <img :src="baseimgurl + item.bImgUrl" >
+          </a>
+          <p class="des">{{item.subtitle}}</p>
         </li>
       </ul>
     </div>
@@ -20,8 +14,28 @@
 </template>
 
 <script>
+import giftApi from '@/api/gift'
 export default {
-
+  data () {
+    return {
+      baseimgurl: process.env.BASE_API,
+      giftarr: []
+    }
+  },
+  methods: {
+    getlist () {
+      giftApi.getdata().then((res) => {
+        if (res.data.code === 0) {
+          this.giftarr = res.data.data
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    }
+  },
+  mounted () {
+    this.getlist()
+  }
 }
 </script>
 
